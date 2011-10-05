@@ -1,0 +1,42 @@
+Author: Miguel Bejar
+
+The program still has a bug, ocurring sometimes when there is a sequence of
+three consequent vowels. See the documentation for _next in checker.py for
+details.
+
+To run the spellchecker, run spellchecker.py with the name of the dictionary 
+file. All of the source code files should be kept in the same directory.
+
+To run the word misspeller, run misspeller.py with the name of a file from
+which to generate misspelled words. 
+
+The structure used to parse the dictionary is called an MA-FSA. The
+construction for the MA-FSA was presented in this article:
+	http://www.aclweb.org/anthology-new/J/J00/J00-1002.pdf
+
+The python implementation for the MA-FSA structure was inspired by Steve Hanov:
+	http://stevehanov.ca/blog/index.php?id=119
+
+The MA-FSA paper states that the time complexity to build the structure is 
+around O(l*log(n)), where l is the number of letters in the input list, 
+and n is the number of states in the MA-FSA. A better explanation than I could
+give can be found there. 
+
+For the searching and correcting of words, we use a greedy algorithm, consuming
+any repeated characters and backtracking from there until an adequate next
+characted for the corrected word can be found. The algorithm's time complexity
+is polynomial with respect to the length of the input string. The most
+letters that could be tried for each character in the input string is 6. This
+Occurs if the input character is a vowel, and consists of the itself, the
+four other vowels of the same case, and the different-case version of that
+same vowel. This assumes that all of the vowels are valid transitions from the
+current state, which is unlikely. So, in the worst case, for a string of l 
+vowels, the time complexity of this algorithm would be O(l^6). In practice 
+the algorithm performs much better because for any consonant the letter is 
+either a repeated insertion, or is just the wrong case of itself.
+
+The time complexity of the algorithm is affected by the size of the dictionary
+to the extent that the branching factor of the MA-FSA increases as the size of 
+the dictionary increases. However, this does reach a saturation level, so after
+all of the vowels are valid transitions from all of the states, the worst-case 
+time complexity of the algorithm is O(l^6).
