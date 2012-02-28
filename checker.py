@@ -42,28 +42,28 @@ def _suggestion(root, word, prev_char = ''):
         response.append(cur)
         return response
 
-'''Returns a suggestion from the set of possible next states, given the 
+'''Returns a suggestion from the set of possible next states, given the
    previous character. If a character cannot be found, then the previous
    character does not form part of a dictionary word.
    Uses a greedy algorithm to consume the word. If the previous character
-   and the beginning of the word are the same, runs until a new character 
+   and the beginning of the word are the same, runs until a new character
    ocurrs, and then starts trying to come up with a new character.
    This is the source of a bug (06/15/2011). If there is a sequence of three
-   consecutive vowels, the algorithm will only be able to handle two of them, 
+   consecutive vowels, the algorithm will only be able to handle two of them,
    the first and the last vowel. This means that some good spelling corrections
    to words aren't made.
-   
+
    Args: possible - set of possible next states given the previous character
          word - rest of the word to be spellchecked
          prev - previous character in the word
-         
+
    Returns: offset - position in the word after which the next character
             should be inserted.
-            Also, either None, a character, or the empty string. 
+            Also, either None, a character, or the empty string.
             Returns None if no possible character can be found, and
             the the end of the word input is not a run of the same letters.
             Returns a character if a next possible character was found.
-            Returns the empty string if no next character was found, but 
+            Returns the empty string if no next character was found, but
             the end of the input had a single run of the same letter.'''
 
 def _next(possible, word, prev):
